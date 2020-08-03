@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
@@ -23,14 +23,19 @@ function Cadastro() {
   }
 
   function handleChange(infosDoEvento) {
-    // const { getAttribute, value } = infosDoEvento.target;
-
-    // setValue(getAttribute("name"), value);
     setValue(
       infosDoEvento.target.getAttribute('name'),
       infosDoEvento.target.value,
     );
   }
+
+  useEffect(() => {
+    const URL = 'http://localhost:8080/categorias';
+    fetch(URL).then(async (respostaDoServidor) => {
+      const resposta = await respostaDoServidor.json();
+      setCategorias([...resposta]);
+    });
+  });
 
   return (
     <PageDefault>
@@ -73,10 +78,10 @@ function Cadastro() {
         <Button>Cadastrar</Button>
       </form>
 
+      {categorias.length === 0 && <div>loading...</div>}
+
       <ul>
-        {categorias.map((categorias, indice) => (
-          <li key={`${categorias}${indice}`}>{categorias.nome}</li>
-        ))}
+        {categorias.map((categoria, indice) => <li key={`${categoria}${indice}`}>{categoria.titulo}</li>)}
       </ul>
 
       <Link to="/">Ir para home</Link>
