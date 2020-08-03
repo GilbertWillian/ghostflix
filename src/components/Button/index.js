@@ -1,7 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Button = styled.button`
-  color: var(--white);
+  /* color: var(--white); */
+  color: var(--red); /* Minha cor personalizada */
+  background-color: var(--black);
   border: 1px solid var(--white);
   box-sizing: border-box;
   cursor: pointer;
